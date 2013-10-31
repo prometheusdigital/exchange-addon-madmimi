@@ -1,0 +1,33 @@
+.tgm-exchange-madmimi label,
+.tgm-exchange-madmimi th,
+.tgm-exchange-madmimi td {
+    margin: 0;
+    vertical-align: middle;
+}
+
+.tgm-exchange-madmimi th {
+    padding-left: 0;
+}
+
+.tgm-exchange-madmimi input[type=text] {
+    margin: 0;
+    padding: 6px 8px;
+    width: 250px;
+}
+
+.tgm-exchange-madmimi select {
+    margin: 0;
+    height: 2.4em;
+    min-width: 250px;
+}
+
+.tgm-exchange-error {
+    border-color: #cc0000 !important;
+    color: #cc0000 !important;
+}
+
+.tgm-exchange-loading {
+    display: none;
+    vertical-align: middle;
+    margin-left: 5px;
+}
