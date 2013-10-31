@@ -2,7 +2,7 @@
 /**
  * iThemes Exchange - Madmimi Add-on.
  *
- * @package   OptinMonster
+ * @package   TGM_Exchange_Madmimi
  * @author    Thomas Griffin
  * @license   GPL-2.0+
  * @link      http://thomasgriffinmedia.com/
