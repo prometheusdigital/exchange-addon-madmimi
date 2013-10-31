@@ -234,23 +234,6 @@ class TGM_Exchange_Madmimi {
     }
 
     /**
-     * Add Settings page to plugin action links in the Plugins table.
-     *
-     * @since 1.0.0
-     *
-     * @param array $links Default plugin action links.
-     * @return array $links Amended plugin action links.
-     */
-    public function settings_link( $links ) {
-
-        $setting_link = sprintf( '<a href="%s">%s</a>', add_query_arg( array( 'page' => 'optin-monster' ), admin_url( 'admin.php' ) ), __( 'Settings', 'optin-monster' ) );
-        array_unshift( $links, $setting_link );
-
-        return $links;
-
-    }
-
-    /**
      * Register and enqueue admin-specific stylesheets.
      *
      * @since 1.0.0
@@ -277,7 +260,6 @@ class TGM_Exchange_Madmimi {
         if ( ! $this->is_settings_page() ) return;
 
         wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'lib/js/admin.js', __FILE__ ), array( 'jquery' ), $this->version );
-
 
     }
 
