@@ -137,14 +137,14 @@ class TGM_Exchange_Madmimi {
 
         // If not WP 3.5 or greater, bail.
         if ( version_compare( $wp_version, '3.5.1', '<' ) ) {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
-			wp_die( 'Sorry, but your version of WordPress, <strong>' . $wp_version . '</strong>, does not meet the required version of <strong>3.5.1</strong> to run this plugin properly. The plugin has been deactivated. <a href="' . admin_url() . '">Click here to return to the Dashboard</a>.' );
-		}
+            deactivate_plugins( plugin_basename( __FILE__ ) );
+            wp_die( 'Sorry, but your version of WordPress, <strong>' . $wp_version . '</strong>, does not meet the required version of <strong>3.5.1</strong> to run this plugin properly. The plugin has been deactivated. <a href="' . admin_url() . '">Click here to return to the Dashboard</a>.' );
+        }
 
-		// If our option does not exist yet, add it now.
-		$settings = get_option( 'tgm_exchange_madmimi' );
-		if ( ! $settings )
-		    update_option( 'tgm_exchange_madmimi', TGM_Exchange_Madmimi::defaults() );
+        // If our option does not exist yet, add it now.
+        $settings = get_option( 'tgm_exchange_madmimi' );
+        if ( ! $settings )
+            update_option( 'tgm_exchange_madmimi', TGM_Exchange_Madmimi::defaults() );
 
     }
 
@@ -224,11 +224,11 @@ class TGM_Exchange_Madmimi {
     public function nag() {
 
         ?>
-    	<div id="tgm-exchange-madmimi-nag" class="it-exchange-nag">
-    		<?php
-    		printf( __( 'To use the Madmimi add-on for iThemes Exchange, you must be using iThemes Exchange version 1.0.3 or higher. <a href="%s">Please update now</a>.', 'tgm-exchange-madmimi' ), admin_url( 'update-core.php' ) );
-    		?>
-    	</div>
+        <div id="tgm-exchange-madmimi-nag" class="it-exchange-nag">
+            <?php
+            printf( __( 'To use the Madmimi add-on for iThemes Exchange, you must be using iThemes Exchange version 1.0.3 or higher. <a href="%s">Please update now</a>.', 'tgm-exchange-madmimi' ), admin_url( 'update-core.php' ) );
+            ?>
+        </div>
         <?php
 
     }
@@ -293,20 +293,20 @@ class TGM_Exchange_Madmimi {
             $this->save_form();
 
         ?>
-		<div class="wrap tgm-exchange-madmimi">
-			<?php screen_icon( 'it-exchange' ); ?>
-			<h2><?php _e( 'Madmimi Settings', 'tgm-exchange-madmimi' ); ?></h2>
+        <div class="wrap tgm-exchange-madmimi">
+            <?php screen_icon( 'it-exchange' ); ?>
+            <h2><?php _e( 'Madmimi Settings', 'tgm-exchange-madmimi' ); ?></h2>
 
-			<?php if ( ! empty( $this->errors ) ) : ?>
-			    <div id="message" class="error"><p><strong><?php echo implode( '<br>', $this->errors ); ?></strong></p></div>
-			<?php endif; ?>
+            <?php if ( ! empty( $this->errors ) ) : ?>
+                <div id="message" class="error"><p><strong><?php echo implode( '<br>', $this->errors ); ?></strong></p></div>
+            <?php endif; ?>
 
-			<?php if ( $this->saved ) : ?>
-			    <div id="message" class="updated"><p><strong><?php _e( 'Your settings have been saved successfully!', 'tgm-exchange-madmimi' ); ?></strong></p></div>
-			<?php endif; ?>
+            <?php if ( $this->saved ) : ?>
+                <div id="message" class="updated"><p><strong><?php _e( 'Your settings have been saved successfully!', 'tgm-exchange-madmimi' ); ?></strong></p></div>
+            <?php endif; ?>
 
-			<?php do_action( 'it_exchange_madmimi_settings_page_top' ); ?>
-			<?php do_action( 'it_exchange_addon_settings_page_top' ); ?>
+            <?php do_action( 'it_exchange_madmimi_settings_page_top' ); ?>
+            <?php do_action( 'it_exchange_addon_settings_page_top' ); ?>
 
             <div class="tgm-exchange-madmimi-settings">
                 <p><?php _e( 'To setup Madmimi in Exchange, fill out the settings below.', 'tgm-exchange-madmimi' ); ?></p>
@@ -357,10 +357,10 @@ class TGM_Exchange_Madmimi {
                 </form>
             </div>
 
-			<?php do_action( 'it_exchange_madmimi_settings_page_bottom' ); ?>
-			<?php do_action( 'it_exchange_addon_settings_page_bottom' ); ?>
-		</div>
-		<?php
+            <?php do_action( 'it_exchange_madmimi_settings_page_bottom' ); ?>
+            <?php do_action( 'it_exchange_addon_settings_page_bottom' ); ?>
+        </div>
+        <?php
 
     }
 
@@ -465,28 +465,28 @@ class TGM_Exchange_Madmimi {
         } else {
             // Load the Madmimi necessary library components.
             if ( ! class_exists( 'MadMimi' ) )
-				require_once plugin_dir_path( TGM_EXCHANGE_MADMIMI_FILE ) . 'lib/madmimi/MadMimi.class.php';
+                require_once plugin_dir_path( TGM_EXCHANGE_MADMIMI_FILE ) . 'lib/madmimi/MadMimi.class.php';
 
             // Load the Madmimi API.
             $madmimi = new MadMimi( $username, $api_key );
 
             // Attempt to load the lists from the API.
-			libxml_use_internal_errors( true );
-			$lists = simplexml_load_string( $madmimi->Lists() );
+            libxml_use_internal_errors( true );
+            $lists = simplexml_load_string( $madmimi->Lists() );
 
-			// If XML is not returned, we need to send an error message.
-			if ( ! $lists ) {
-    			$html .= '<select id="tgm-exchange-madmimi-lists" class="tgm-exchange-error" name="_tgm_exchange_madmimi[madmimi-list]" disabled="disabled">';
+            // If XML is not returned, we need to send an error message.
+            if ( ! $lists ) {
+                $html .= '<select id="tgm-exchange-madmimi-lists" class="tgm-exchange-error" name="_tgm_exchange_madmimi[madmimi-list]" disabled="disabled">';
                     $html .= '<option value="none">' . __( 'Invalid credentials. Please try again.', 'tgm-exchange-madmimi' ) . '</option>';
                 $html .= '</select>';
                 $html .= '<img class="tgm-exchange-loading" src="' . includes_url( 'images/wpspin.gif' ) . '" alt="" />';
-			} else {
-    			$html .= '<select id="tgm-exchange-madmimi-lists" name="_tgm_exchange_madmimi[madmimi-list]">';
+            } else {
+                $html .= '<select id="tgm-exchange-madmimi-lists" name="_tgm_exchange_madmimi[madmimi-list]">';
                     foreach ( $lists->list as $list )
-						$html .= '<option value="' . $list['name'] . '"' . selected( $list['name'], $this->get_setting( 'madmimi-list' ), false ) . '>' . $list['name'] . '</option>';
+                        $html .= '<option value="' . $list['name'] . '"' . selected( $list['name'], $this->get_setting( 'madmimi-list' ), false ) . '>' . $list['name'] . '</option>';
                 $html .= '</select>';
                 $html .= '<img class="tgm-exchange-loading" src="' . includes_url( 'images/wpspin.gif' ) . '" alt="" />';
-			}
+            }
         }
 
         // Return the HTML string.

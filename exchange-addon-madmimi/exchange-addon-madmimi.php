@@ -38,23 +38,23 @@ add_action( 'it_exchange_register_addons', 'tgm_exchange_madmimi_register' );
 function tgm_exchange_madmimi_register() {
 
     $versions         = get_option( 'it-exchange-versions', false );
-	$current_version  = empty( $versions['current'] ) ? false : $versions['current'];
+    $current_version  = empty( $versions['current'] ) ? false : $versions['current'];
 
-	if ( $current_version && version_compare( $current_version, '1.0.3', '>' ) ) {
-		$options = array(
-			'name'              => __( 'Madmimi', 'tgm-exchange-madmimi' ),
-			'description'       => __( 'Adds a Madmimi optin checkbox to the user registration form.', 'tgm-exchange-madmimi' ),
-			'author'            => 'Thomas Griffin',
-			'author_url'        => 'http://thomasgriffinmedia.com/',
-			'icon'              => ITUtility::get_url_from_file( dirname( __FILE__ ) . '/lib/images/madmimi50px.png' ),
-			'file'              => dirname( __FILE__ ) . '/class-exchange-addon-madmimi.php',
-			'category'          => 'email',
-			'settings-callback' => 'tgm_exchange_madmimi_settings'
-		);
-		it_exchange_register_addon( 'madmimi', $options );
-	} else {
-		add_action( 'admin_notices', 'tgm_exchange_madmimi_nag' );
-	}
+    if ( $current_version && version_compare( $current_version, '1.0.3', '>' ) ) {
+        $options = array(
+            'name'              => __( 'Madmimi', 'tgm-exchange-madmimi' ),
+            'description'       => __( 'Adds a Madmimi optin checkbox to the user registration form.', 'tgm-exchange-madmimi' ),
+            'author'            => 'Thomas Griffin',
+            'author_url'        => 'http://thomasgriffinmedia.com/',
+            'icon'              => ITUtility::get_url_from_file( dirname( __FILE__ ) . '/lib/images/madmimi50px.png' ),
+            'file'              => dirname( __FILE__ ) . '/class-exchange-addon-madmimi.php',
+            'category'          => 'email',
+            'settings-callback' => 'tgm_exchange_madmimi_settings'
+        );
+        it_exchange_register_addon( 'madmimi', $options );
+    } else {
+        add_action( 'admin_notices', 'tgm_exchange_madmimi_nag' );
+    }
 
 }
 
