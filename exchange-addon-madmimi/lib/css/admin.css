@@ -9,7 +9,8 @@
     padding-left: 0;
 }
 
-.tgm-exchange-madmimi input[type=text] {
+.tgm-exchange-madmimi input[type=text],
+.tgm-exchange-madmimi input[type=password] {
     margin: 0;
     padding: 6px 8px;
     width: 250px;

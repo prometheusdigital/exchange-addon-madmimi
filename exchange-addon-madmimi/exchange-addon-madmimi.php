@@ -1,6 +1,6 @@
 <?php
 /**
- * iThemes Exchange - Madmimi Add-on.
+ * iThemes Exchange - Mad Mimi Add-on.
  *
  * @package   TGM_Exchange_Madmimi
  * @author    Thomas Griffin
@@ -9,9 +9,9 @@
  * @copyright 2013 Griffin Media, LLC. All rights reserved.
  *
  * @wordpress-plugin
- * Plugin Name:  iThemes Exchange - Madmimi Add-on
+ * Plugin Name:  iThemes Exchange - Mad Mimi Add-on
  * Plugin URI:   http://ithemes.com/exchange/madmimi/
- * Description:  Integrates Madmimi into the iThemes Exchange plugin.
+ * Description:  Integrates Mad Mimi into the iThemes Exchange plugin.
  * Version:      1.0.0
  * Author:       Thomas Griffin
  * Author URI:   http://thomasgriffinmedia.com/
@@ -31,7 +31,7 @@ define( 'TGM_EXCHANGE_MADMIMI_FILE', __FILE__ );
 // Register the addon with the Exchange engine.
 add_action( 'it_exchange_register_addons', 'tgm_exchange_madmimi_register' );
 /**
- * Registers the Madmimi addon with the Exchange addons engine.
+ * Registers the Mad Mimi addon with the Exchange addons engine.
  *
  * @since 1.0.0
  */
@@ -42,8 +42,8 @@ function tgm_exchange_madmimi_register() {
 
     if ( $current_version && version_compare( $current_version, '1.0.3', '>' ) ) {
         $options = array(
-            'name'              => __( 'Madmimi', 'tgm-exchange-madmimi' ),
-            'description'       => __( 'Adds a Madmimi optin checkbox to the user registration form.', 'tgm-exchange-madmimi' ),
+            'name'              => __( 'Mad Mimi', 'tgm-exchange-madmimi' ),
+            'description'       => __( 'Adds a Mad Mimi optin checkbox to the user registration form.', 'tgm-exchange-madmimi' ),
             'author'            => 'Thomas Griffin',
             'author_url'        => 'http://thomasgriffinmedia.com/',
             'icon'              => ITUtility::get_url_from_file( dirname( __FILE__ ) . '/lib/images/madmimi50px.png' ),

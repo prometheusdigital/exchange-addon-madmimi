@@ -1,6 +1,6 @@
 <?php
 /**
- * iThemes Exchange - Madmimi Add-on class.
+ * iThemes Exchange - Mad Mimi Add-on class.
  *
  * @package   TGM_Exchange_Madmimi
  * @author    Thomas Griffin
@@ -31,7 +31,7 @@ class TGM_Exchange_Madmimi {
      *
      * @var string
      */
-    public $plugin_name = 'iThemes Exchange - Madmimi Add-on';
+    public $plugin_name = 'iThemes Exchange - Mad Mimi Add-on';
 
     /**
      * Unique plugin identifier.
@@ -186,7 +186,7 @@ class TGM_Exchange_Madmimi {
         ?>
         <div id="tgm-exchange-madmimi-nag" class="it-exchange-nag">
             <?php
-            printf( __( 'To use the Madmimi add-on for iThemes Exchange, you must be using iThemes Exchange version 1.0.3 or higher. <a href="%s">Please update now</a>.', 'tgm-exchange-madmimi' ), admin_url( 'update-core.php' ) );
+            printf( __( 'To use the Mad Mimi add-on for iThemes Exchange, you must be using iThemes Exchange version 1.0.3 or higher. <a href="%s">Please update now</a>.', 'tgm-exchange-madmimi' ), admin_url( 'update-core.php' ) );
             ?>
         </div>
         <?php
@@ -251,7 +251,7 @@ class TGM_Exchange_Madmimi {
             <?php do_action( 'it_exchange_addon_settings_page_top' ); ?>
 
             <div class="tgm-exchange-madmimi-settings">
-                <p><?php _e( 'To setup Madmimi in Exchange, fill out the settings below.', 'tgm-exchange-madmimi' ); ?></p>
+                <p><?php _e( 'To setup Mad Mimi in Exchange, fill out the settings below.', 'tgm-exchange-madmimi' ); ?></p>
                 <form class="tgm-exchange-madmimi-form" action="admin.php?page=it-exchange-addons&add-on-settings=madmimi" method="post">
                     <?php wp_nonce_field( 'tgm-exchange-madmimi-form' ); ?>
                     <input type="hidden" name="tgm-exchange-madmimi-form" value="1" />
@@ -260,23 +260,23 @@ class TGM_Exchange_Madmimi {
                         <tbody>
                             <tr valign="middle">
                                 <th scope="row">
-                                    <label for="tgm-exchange-madmimi-username"><strong><?php _e( 'Madmimi Username', 'tgm-exchange-madmimi' ); ?></strong></label>
+                                    <label for="tgm-exchange-madmimi-username"><strong><?php _e( 'Mad Mimi Username', 'tgm-exchange-madmimi' ); ?></strong></label>
                                 </th>
                                 <td>
-                                    <input id="tgm-exchange-madmimi-username" type="text" name="_tgm_exchange_madmimi[madmimi-username]" value="<?php echo $this->get_setting( 'madmimi-username' ); ?>" placeholder="<?php esc_attr_e( 'Enter your Madmimi username here.', 'tgm-exchange-madmimi' ); ?>" />
+                                    <input id="tgm-exchange-madmimi-username" type="text" name="_tgm_exchange_madmimi[madmimi-username]" value="<?php echo $this->get_setting( 'madmimi-username' ); ?>" placeholder="<?php esc_attr_e( 'Enter your Mad Mimi username here.', 'tgm-exchange-madmimi' ); ?>" />
                                 </td>
                             </tr>
                             <tr valign="middle">
                                 <th scope="row">
-                                    <label for="tgm-exchange-madmimi-api-key"><strong><?php _e( 'Madmimi API Key', 'tgm-exchange-madmimi' ); ?></strong></label>
+                                    <label for="tgm-exchange-madmimi-api-key"><strong><?php _e( 'Mad Mimi API Key', 'tgm-exchange-madmimi' ); ?></strong></label>
                                 </th>
                                 <td>
-                                    <input id="tgm-exchange-madmimi-api-key" type="text" name="_tgm_exchange_madmimi[madmimi-api-key]" value="<?php echo $this->get_setting( 'madmimi-api-key' ); ?>" placeholder="<?php esc_attr_e( 'Enter your Madmimi API Key here.', 'tgm-exchange-madmimi' ); ?>" />
+                                    <input id="tgm-exchange-madmimi-api-key" type="password" name="_tgm_exchange_madmimi[madmimi-api-key]" value="<?php echo $this->get_setting( 'madmimi-api-key' ); ?>" placeholder="<?php esc_attr_e( 'Enter your Mad Mimi API Key here.', 'tgm-exchange-madmimi' ); ?>" />
                                 </td>
                             </tr>
                             <tr valign="middle">
                                 <th scope="row">
-                                    <label for="tgm-exchange-madmimi-lists"><strong><?php _e( 'Madmimi List', 'tgm-exchange-madmimi' ); ?></strong></label>
+                                    <label for="tgm-exchange-madmimi-lists"><strong><?php _e( 'Mad Mimi List', 'tgm-exchange-madmimi' ); ?></strong></label>
                                 </th>
                                 <td>
                                     <div class="tgm-exchange-madmimi-list-output">
@@ -286,15 +286,15 @@ class TGM_Exchange_Madmimi {
                             </tr>
                             <tr valign="middle">
                                 <th scope="row">
-                                    <label for="tgm-exchange-madmimi-label"><strong><?php _e( 'Madmimi Label', 'tgm-exchange-madmimi' ); ?></strong></label>
+                                    <label for="tgm-exchange-madmimi-label"><strong><?php _e( 'Mad Mimi Label', 'tgm-exchange-madmimi' ); ?></strong></label>
                                 </th>
                                 <td>
-                                    <input id="tgm-exchange-madmimi-label" type="text" name="_tgm_exchange_madmimi[madmimi-label]" value="<?php echo $this->get_setting( 'madmimi-label' ); ?>" placeholder="<?php esc_attr_e( 'Enter your Madmimi username here.', 'tgm-exchange-madmimi' ); ?>" />
+                                    <input id="tgm-exchange-madmimi-label" type="text" name="_tgm_exchange_madmimi[madmimi-label]" value="<?php echo $this->get_setting( 'madmimi-label' ); ?>" placeholder="<?php esc_attr_e( 'Enter your Mad Mimi checkbox label here.', 'tgm-exchange-madmimi' ); ?>" />
                                 </td>
                             </tr>
                             <tr valign="middle">
                                 <th scope="row">
-                                    <label for="tgm-exchange-madmimi-checked"><strong><?php _e( 'Check Madmimi box by default?', 'tgm-exchange-madmimi' ); ?></strong></label>
+                                    <label for="tgm-exchange-madmimi-checked"><strong><?php _e( 'Check Mad Mimi box by default?', 'tgm-exchange-madmimi' ); ?></strong></label>
                                 </th>
                                 <td>
                                     <input id="tgm-exchange-madmimi-checked" type="checkbox" name="_tgm_exchange_madmimi[madmimi-checked]" value="<?php echo (bool) $this->get_setting( 'madmimi-checked' ); ?>" <?php checked( $this->get_setting( 'madmimi-checked' ), 1 ); ?> />
