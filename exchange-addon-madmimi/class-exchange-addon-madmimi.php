@@ -513,9 +513,12 @@ class TGM_Exchange_Madmimi {
         $email      = trim( $_POST['email'] );
         $first_name = ! empty( $_POST['first_name'] ) ? trim( $_POST['first_name'] ) : '';
         $last_name  = ! empty( $_POST['last_name'] )  ? trim( $_POST['last_name'] )  : '';
+        $data       = array( 'add_list' => $this->get_setting( 'madmimi-list' ), 'email' => $email, 'firstName' => $first_name, 'lastName' => $last_name );
+        $data       = apply_filters( 'tgm_exchange_madmimi_optin_data', $data );
 
         // Process the optin.
-        $madmimi->AddUser( array( 'add_list' => $this->get_setting( 'madmimi-list' ), 'email' => $email, 'firstName' => $first_name, 'lastName' => $last_name ) );
+        if ( $data )
+            $madmimi->AddUser( $data );
 
     }
 
