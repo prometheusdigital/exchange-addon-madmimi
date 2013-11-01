@@ -123,46 +123,6 @@ class TGM_Exchange_Madmimi {
     }
 
     /**
-     * Fired when the plugin is activated.
-     *
-     * @since 1.0.0
-     *
-     * @global int $wp_version The current version of WP on this install.
-     *
-     * @param boolean $network_wide True if WPMU superadmin uses "Network Activate" action, false otherwise.
-     */
-    public static function activate( $network_wide ) {
-
-        global $wp_version;
-
-        // If not WP 3.5 or greater, bail.
-        if ( version_compare( $wp_version, '3.5.1', '<' ) ) {
-            deactivate_plugins( plugin_basename( __FILE__ ) );
-            wp_die( 'Sorry, but your version of WordPress, <strong>' . $wp_version . '</strong>, does not meet the required version of <strong>3.5.1</strong> to run this plugin properly. The plugin has been deactivated. <a href="' . admin_url() . '">Click here to return to the Dashboard</a>.' );
-        }
-
-        // If our option does not exist yet, add it now.
-        $settings = get_option( 'tgm_exchange_madmimi' );
-        if ( ! $settings )
-            update_option( 'tgm_exchange_madmimi', TGM_Exchange_Madmimi::defaults() );
-
-    }
-
-    /**
-     * Fired when the plugin is uninstalled.
-     *
-     * @since 1.0.0
-     *
-     * @param boolean $network_wide True if WPMU superadmin uses "Network Activate" action, false otherwise.
-     */
-    public static function uninstall( $network_wide ) {
-
-        // Remove any trace of our addon.
-        delete_option( 'tgm_exchange_madmimi' );
-
-    }
-
-    /**
      * Load the plugin text domain for translation.
      *
      * @since 1.0.0
@@ -332,6 +292,14 @@ class TGM_Exchange_Madmimi {
                                     <input id="tgm-exchange-madmimi-label" type="text" name="_tgm_exchange_madmimi[madmimi-label]" value="<?php echo $this->get_setting( 'madmimi-label' ); ?>" placeholder="<?php esc_attr_e( 'Enter your Madmimi username here.', 'tgm-exchange-madmimi' ); ?>" />
                                 </td>
                             </tr>
+                            <tr valign="middle">
+                                <th scope="row">
+                                    <label for="tgm-exchange-madmimi-checked"><strong><?php _e( 'Check Madmimi box by default?', 'tgm-exchange-madmimi' ); ?></strong></label>
+                                </th>
+                                <td>
+                                    <input id="tgm-exchange-madmimi-checked" type="checkbox" name="_tgm_exchange_madmimi[madmimi-checked]" value="<?php echo (bool) $this->get_setting( 'madmimi-checked' ); ?>" <?php checked( $this->get_setting( 'madmimi-checked' ), 1 ); ?> />
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
 
@@ -367,6 +335,7 @@ class TGM_Exchange_Madmimi {
         $settings['madmimi-api-key']  = trim( $new_settings['madmimi-api-key'] );
         $settings['madmimi-list']     = esc_attr( $new_settings['madmimi-list'] );
         $settings['madmimi-label']    = esc_html( $new_settings['madmimi-label'] );
+        $settings['madmimi-checked']  = isset( $new_settings['madmimi-checked'] ) ? 1 : 0;
 
         // Save the settings and set saved flag to true.
         if ( update_option( 'tgm_exchange_madmimi', $settings ) )
@@ -477,25 +446,6 @@ class TGM_Exchange_Madmimi {
     }
 
     /**
-     * Sets addon option defaults.
-     *
-     * @since 1.0.0
-     *
-     * @return array $defaults Default options.
-     */
-    public static function defaults() {
-
-        $defaults                     = array();
-        $defaults['madmimi-username'] = '';
-        $defaults['madmimi-api-key']  = '';
-        $defaults['madmimi-list']     = '';
-        $defaults['madmimi-label']    = __( 'Sign up to receive updates via email!', 'tgm-exchange-madmimi' );
-
-        return $defaults;
-
-    }
-
-    /**
      * Adds custom action links to the plugin page.
      *
      * @since 1.0.0
@@ -527,7 +477,7 @@ class TGM_Exchange_Madmimi {
         // Build the HTML output of the optin.
         $output  = '<div class="tgm-exchange-madmimi-signup">';
             $output .= '<label for="tgm-exchange-madmimi-signup-field">';
-                $output .= '<input type="checkbox" id="tgm-exchange-madmimi-signup-field" name="tgm-exchange-madmimi-signup-field" value="" />' . $this->get_setting( 'madmimi-label' );
+                $output .= '<input type="checkbox" id="tgm-exchange-madmimi-signup-field" name="tgm-exchange-madmimi-signup-field" value="' . $this->get_setting( 'madmimi-checked' ) . '"' . checked( $this->get_setting( 'madmimi-checked' ), 1, false ) . ' />' . $this->get_setting( 'madmimi-label' );
             $output .= '</label>';
         $output .= '</div>';
         $output  = apply_filters( 'tgm_exchange_madmimi_output', $output );
@@ -570,10 +520,6 @@ class TGM_Exchange_Madmimi {
     }
 
 }
-
-// Register activation and uninstall hooks.
-register_activation_hook( __FILE__, array( 'TGM_Exchange_Madmimi', 'activate' ) );
-register_uninstall_hook(  __FILE__, array( 'TGM_Exchange_Madmimi', 'uninstall' ) );
 
 // Initialize the plugin.
 global $tgm_exchange_madmimi;
