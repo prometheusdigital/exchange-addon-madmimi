@@ -383,11 +383,7 @@ class TGM_Exchange_Madmimi {
     public function get_setting( $setting = '' ) {
 
         $settings = get_option( 'tgm_exchange_madmimi' );
-
-        if ( 'madmimi-label' == $setting )
-            return isset( $settings[$setting] ) ? $settings[$setting] : __( 'Sign up to receive updates via email!', 'tgm-exchange-madmimi' );
-        else
-            return isset( $settings[$setting] ) ? $settings[$setting] : '';
+        return isset( $settings[$setting] ) ? $settings[$setting] : '';
 
     }
 
