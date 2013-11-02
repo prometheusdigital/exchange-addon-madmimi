@@ -331,17 +331,15 @@ class TGM_Exchange_Madmimi {
         $settings     = get_option( 'tgm_exchange_madmimi' );
         $new_settings = stripslashes_deep( $_POST['_tgm_exchange_madmimi'] );
 
-        $settings['madmimi-username'] = trim( $new_settings['madmimi-username'] );
-        $settings['madmimi-api-key']  = trim( $new_settings['madmimi-api-key'] );
-        $settings['madmimi-list']     = esc_attr( $new_settings['madmimi-list'] );
-        $settings['madmimi-label']    = esc_html( $new_settings['madmimi-label'] );
+        $settings['madmimi-username'] = isset( $new_settings['madmimi-username'] ) ? trim( $new_settings['madmimi-username'] ) : $settings['madmimi-username'];
+        $settings['madmimi-api-key']  = isset( $new_settings['madmimi-api-key'] ) ? trim( $new_settings['madmimi-api-key'] ) : $settings['madmimi-api-key'];
+        $settings['madmimi-list']     = isset( $new_settings['madmimi-list'] ) ? esc_attr( $new_settings['madmimi-list'] ) : $settings['madmimi-list'];
+        $settings['madmimi-label']    = isset( $new_settings['madmimi-label'] ? esc_html( $new_settings['madmimi-label'] ) : $settings['madmimi-label'];
         $settings['madmimi-checked']  = isset( $new_settings['madmimi-checked'] ) ? 1 : 0;
 
         // Save the settings and set saved flag to true.
-        if ( update_option( 'tgm_exchange_madmimi', $settings ) )
-            return $this->saved = true;
-        else
-            return $this->errors[] = __( 'There was an error saving your settings. Please try again.', 'tgm-exchange-madmimi' );
+        update_option( 'tgm_exchange_madmimi', $settings );
+        return $this->saved = true;
 
     }
 
