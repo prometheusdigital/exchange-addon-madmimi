@@ -2,20 +2,20 @@
 /**
  * iThemes Exchange - Mad Mimi Add-on.
  *
- * @package   TGM_Exchange_Madmimi
+ * @package   TGM_Exchange_MadMimi
  * @author    Thomas Griffin
  * @license   GPL-2.0+
  * @link      http://thomasgriffinmedia.com/
  * @copyright 2013 Griffin Media, LLC. All rights reserved.
  *
  * @wordpress-plugin
- * Plugin Name:  iThemes Exchange - Mad Mimi Add-on
+ * Plugin Name:  iThemes Exchange - MadMimi Add-on
  * Plugin URI:   http://ithemes.com/exchange/madmimi/
  * Description:  Integrates Mad Mimi into the iThemes Exchange plugin.
  * Version:      1.0.0
  * Author:       Thomas Griffin
  * Author URI:   http://thomasgriffinmedia.com/
- * Text Domain:  tgm-exchange-madmimi
+ * Text Domain:  LION
  * Contributors: griffinjt
  * License:      GPL-2.0+
  * License URI:  http://www.gnu.org/licenses/gpl-2.0.txt
@@ -27,6 +27,28 @@ if ( ! defined( 'WPINC' ) ) die;
 
 // Define constants.
 define( 'TGM_EXCHANGE_MADMIMI_FILE', __FILE__ );
+
+// Register the plugin updater.
+add_action( 'ithemes_updater_register', 'tgm_exchange_madmimi_updater' );
+/**
+ * Registers the iThemes updater with the addon.
+ *
+ * @since 1.0.0
+ *
+ * @param object $updater The iThemes updater object.
+ */
+function tgm_exchange_madmimi_updater( $updater ) {
+
+    // Return early if not in the admin.
+    if ( ! is_admin() ) return;
+
+    // Load the updater class.
+    require_once dirname( __FILE__ ) . '/lib/updater/load.php';
+
+    // Register the addon with the updater.
+    $updater->register( 'exchange-addon-madmimi', __FILE__ );
+
+}
 
 // Register the addon with the Exchange engine.
 add_action( 'it_exchange_register_addons', 'tgm_exchange_madmimi_register' );
@@ -42,8 +64,8 @@ function tgm_exchange_madmimi_register() {
 
     if ( $current_version && version_compare( $current_version, '1.0.3', '>' ) ) {
         $options = array(
-            'name'              => __( 'Mad Mimi', 'tgm-exchange-madmimi' ),
-            'description'       => __( 'Adds a Mad Mimi optin checkbox to the user registration form.', 'tgm-exchange-madmimi' ),
+            'name'              => __( 'MadMimi', 'tgm-exchange-madmimi' ),
+            'description'       => __( 'Adds a MadMimi optin checkbox to the user registration form.', 'tgm-exchange-madmimi' ),
             'author'            => 'Thomas Griffin',
             'author_url'        => 'http://thomasgriffinmedia.com/',
             'icon'              => ITUtility::get_url_from_file( dirname( __FILE__ ) . '/lib/images/madmimi50px.png' ),
@@ -65,7 +87,7 @@ function tgm_exchange_madmimi_register() {
  */
 function tgm_exchange_madmimi_settings() {
 
-    TGM_Exchange_Madmimi::get_instance()->settings();
+    TGM_Exchange_MadMimi::get_instance()->settings();
 
 }
 
@@ -76,7 +98,7 @@ function tgm_exchange_madmimi_settings() {
  */
 function tgm_exchange_madmimi_nag() {
 
-    TGM_Exchange_Madmimi::get_instance()->nag();
+    TGM_Exchange_MadMimi::get_instance()->nag();
 
 }
 

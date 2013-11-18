@@ -2,7 +2,7 @@
 /**
  * iThemes Exchange - Mad Mimi Add-on class.
  *
- * @package   TGM_Exchange_Madmimi
+ * @package   TGM_Exchange_MadMimi
  * @author    Thomas Griffin
  * @license   GPL-2.0+
  * @copyright 2013 Griffin Media, LLC. All rights reserved.
@@ -11,9 +11,9 @@
 /**
  * Main plugin class.
  *
- * @package TGM_Exchange_Madmimi
+ * @package TGM_Exchange_MadMimi
  */
-class TGM_Exchange_Madmimi {
+class TGM_Exchange_MadMimi {
 
     /**
      * Plugin version, used for cache-busting of style and script file references.
@@ -95,7 +95,7 @@ class TGM_Exchange_Madmimi {
     private function __construct() {
 
         // Load plugin text domain.
-        add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+        add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
         // Load the plugin.
         add_action( 'init', array( $this, 'init' ) );
@@ -144,9 +144,6 @@ class TGM_Exchange_Madmimi {
      */
     public function init() {
 
-        // Register the plugin updater.
-        add_action( 'ithemes_updater_register', array( $this, 'updater' ) );
-
         // Load admin assets.
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
@@ -154,25 +151,9 @@ class TGM_Exchange_Madmimi {
         // Utility actions.
         add_filter( 'plugin_action_links_' . plugin_basename( TGM_EXCHANGE_MADMIMI_FILE ), array( $this, 'plugin_links' ) );
         add_filter( 'it_exchange_theme_api_registration_password2', array( $this, 'output_optin' ) );
+        add_action( 'it_exchange_content_checkout_logged_in_checkout_requirement_guest_checkout_end_form', array( $this, 'output_optin_guest' ) );
         add_action( 'it_exchange_register_user', array( $this, 'do_optin' ) );
-
-    }
-
-    /**
-     * Initializes the plugin updater for the addon.
-     *
-     * @since 1.0.0
-     */
-    public function updater( $updater ) {
-
-        // Return early if not in the admin.
-        if ( ! is_admin() ) return;
-
-        // Load the updater class.
-        require_once dirname( __FILE__ ) . '/lib/updater/load.php';
-
-        // Register the addon with the updater.
-        $updater->register( 'exchange-addon-madmimi', TGM_EXCHANGE_MADMIMI_FILE );
+        add_action( 'it_exchange_init_guest_checkout', array( $this, 'do_optin_guest' ) );
 
     }
 
@@ -186,7 +167,7 @@ class TGM_Exchange_Madmimi {
         ?>
         <div id="tgm-exchange-madmimi-nag" class="it-exchange-nag">
             <?php
-            printf( __( 'To use the Mad Mimi add-on for iThemes Exchange, you must be using iThemes Exchange version 1.0.3 or higher. <a href="%s">Please update now</a>.', 'tgm-exchange-madmimi' ), admin_url( 'update-core.php' ) );
+            printf( __( 'To use the Mad Mimi add-on for iThemes Exchange, you must be using iThemes Exchange version 1.0.3 or higher. <a href="%s">Please update now</a>.', 'LION' ), admin_url( 'update-core.php' ) );
             ?>
         </div>
         <?php
@@ -237,21 +218,21 @@ class TGM_Exchange_Madmimi {
         ?>
         <div class="wrap tgm-exchange-madmimi">
             <?php screen_icon( 'it-exchange' ); ?>
-            <h2><?php _e( 'Madmimi Settings', 'tgm-exchange-madmimi' ); ?></h2>
+            <h2><?php _e( 'MadMimi Settings', 'LION' ); ?></h2>
 
             <?php if ( ! empty( $this->errors ) ) : ?>
                 <div id="message" class="error"><p><strong><?php echo implode( '<br>', $this->errors ); ?></strong></p></div>
             <?php endif; ?>
 
             <?php if ( $this->saved ) : ?>
-                <div id="message" class="updated"><p><strong><?php _e( 'Your settings have been saved successfully!', 'tgm-exchange-madmimi' ); ?></strong></p></div>
+                <div id="message" class="updated"><p><strong><?php _e( 'Your settings have been saved successfully!', 'LION' ); ?></strong></p></div>
             <?php endif; ?>
 
             <?php do_action( 'it_exchange_madmimi_settings_page_top' ); ?>
             <?php do_action( 'it_exchange_addon_settings_page_top' ); ?>
 
             <div class="tgm-exchange-madmimi-settings">
-                <p><?php _e( 'To setup Mad Mimi in Exchange, fill out the settings below.', 'tgm-exchange-madmimi' ); ?></p>
+                <p><?php _e( 'To setup Mad Mimi in Exchange, fill out the settings below.', 'LION' ); ?></p>
                 <form class="tgm-exchange-madmimi-form" action="admin.php?page=it-exchange-addons&add-on-settings=madmimi" method="post">
                     <?php wp_nonce_field( 'tgm-exchange-madmimi-form' ); ?>
                     <input type="hidden" name="tgm-exchange-madmimi-form" value="1" />
@@ -260,23 +241,23 @@ class TGM_Exchange_Madmimi {
                         <tbody>
                             <tr valign="middle">
                                 <th scope="row">
-                                    <label for="tgm-exchange-madmimi-username"><strong><?php _e( 'Mad Mimi Username', 'tgm-exchange-madmimi' ); ?></strong></label>
+                                    <label for="tgm-exchange-madmimi-username"><strong><?php _e( 'Mad Mimi Username', 'LION' ); ?></strong></label>
                                 </th>
                                 <td>
-                                    <input id="tgm-exchange-madmimi-username" type="text" name="_tgm_exchange_madmimi[madmimi-username]" value="<?php echo $this->get_setting( 'madmimi-username' ); ?>" placeholder="<?php esc_attr_e( 'Enter your Mad Mimi username here.', 'tgm-exchange-madmimi' ); ?>" />
+                                    <input id="tgm-exchange-madmimi-username" type="text" name="_tgm_exchange_madmimi[madmimi-username]" value="<?php echo $this->get_setting( 'madmimi-username' ); ?>" placeholder="<?php esc_attr_e( 'Enter your Mad Mimi username here.', 'LION' ); ?>" />
                                 </td>
                             </tr>
                             <tr valign="middle">
                                 <th scope="row">
-                                    <label for="tgm-exchange-madmimi-api-key"><strong><?php _e( 'Mad Mimi API Key', 'tgm-exchange-madmimi' ); ?></strong></label>
+                                    <label for="tgm-exchange-madmimi-api-key"><strong><?php _e( 'Mad Mimi API Key', 'LION' ); ?></strong></label>
                                 </th>
                                 <td>
-                                    <input id="tgm-exchange-madmimi-api-key" type="password" name="_tgm_exchange_madmimi[madmimi-api-key]" value="<?php echo $this->get_setting( 'madmimi-api-key' ); ?>" placeholder="<?php esc_attr_e( 'Enter your Mad Mimi API Key here.', 'tgm-exchange-madmimi' ); ?>" />
+                                    <input id="tgm-exchange-madmimi-api-key" type="password" name="_tgm_exchange_madmimi[madmimi-api-key]" value="<?php echo $this->get_setting( 'madmimi-api-key' ); ?>" placeholder="<?php esc_attr_e( 'Enter your Mad Mimi API Key here.', 'LION' ); ?>" />
                                 </td>
                             </tr>
                             <tr valign="middle">
                                 <th scope="row">
-                                    <label for="tgm-exchange-madmimi-lists"><strong><?php _e( 'Mad Mimi List', 'tgm-exchange-madmimi' ); ?></strong></label>
+                                    <label for="tgm-exchange-madmimi-lists"><strong><?php _e( 'Mad Mimi List', 'LION' ); ?></strong></label>
                                 </th>
                                 <td>
                                     <div class="tgm-exchange-madmimi-list-output">
@@ -286,15 +267,15 @@ class TGM_Exchange_Madmimi {
                             </tr>
                             <tr valign="middle">
                                 <th scope="row">
-                                    <label for="tgm-exchange-madmimi-label"><strong><?php _e( 'Mad Mimi Label', 'tgm-exchange-madmimi' ); ?></strong></label>
+                                    <label for="tgm-exchange-madmimi-label"><strong><?php _e( 'Mad Mimi Label', 'LION' ); ?></strong></label>
                                 </th>
                                 <td>
-                                    <input id="tgm-exchange-madmimi-label" type="text" name="_tgm_exchange_madmimi[madmimi-label]" value="<?php echo $this->get_setting( 'madmimi-label' ); ?>" placeholder="<?php esc_attr_e( 'Enter your Mad Mimi checkbox label here.', 'tgm-exchange-madmimi' ); ?>" />
+                                    <input id="tgm-exchange-madmimi-label" type="text" name="_tgm_exchange_madmimi[madmimi-label]" value="<?php echo $this->get_setting( 'madmimi-label' ); ?>" placeholder="<?php esc_attr_e( 'Enter your Mad Mimi checkbox label here.', 'LION' ); ?>" />
                                 </td>
                             </tr>
                             <tr valign="middle">
                                 <th scope="row">
-                                    <label for="tgm-exchange-madmimi-checked"><strong><?php _e( 'Check Mad Mimi box by default?', 'tgm-exchange-madmimi' ); ?></strong></label>
+                                    <label for="tgm-exchange-madmimi-checked"><strong><?php _e( 'Check Mad Mimi box by default?', 'LION' ); ?></strong></label>
                                 </th>
                                 <td>
                                     <input id="tgm-exchange-madmimi-checked" type="checkbox" name="_tgm_exchange_madmimi[madmimi-checked]" value="<?php echo (bool) $this->get_setting( 'madmimi-checked' ); ?>" <?php checked( $this->get_setting( 'madmimi-checked' ), 1 ); ?> />
@@ -303,7 +284,7 @@ class TGM_Exchange_Madmimi {
                         </tbody>
                     </table>
 
-                    <?php submit_button( __( 'Save Changes', 'tgm-exchange-madmimi' ), 'primary button-large', '_tgm_exchange_madmimi[save]' ); ?>
+                    <?php submit_button( __( 'Save Changes', 'LION' ), 'primary button-large', '_tgm_exchange_madmimi[save]' ); ?>
                 </form>
             </div>
 
@@ -323,7 +304,7 @@ class TGM_Exchange_Madmimi {
 
         // If the nonce is not correct, return an error.
         if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'tgm-exchange-madmimi-form' ) ) {
-            $this->errors[] = __( 'Are you sure you want to do this? The form nonces do not match. Please try again.', 'tgm-exchange-madmimi' );
+            $this->errors[] = __( 'Are you sure you want to do this? The form nonces do not match. Please try again.', 'LION' );
             return;
         }
 
@@ -331,10 +312,10 @@ class TGM_Exchange_Madmimi {
         $settings     = get_option( 'tgm_exchange_madmimi' );
         $new_settings = stripslashes_deep( $_POST['_tgm_exchange_madmimi'] );
 
-        $settings['madmimi-username'] = isset( $new_settings['madmimi-username'] ) ? trim( $new_settings['madmimi-username'] ) : $settings['madmimi-username'];
-        $settings['madmimi-api-key']  = isset( $new_settings['madmimi-api-key'] ) ? trim( $new_settings['madmimi-api-key'] ) : $settings['madmimi-api-key'];
-        $settings['madmimi-list']     = isset( $new_settings['madmimi-list'] ) ? esc_attr( $new_settings['madmimi-list'] ) : $settings['madmimi-list'];
-        $settings['madmimi-label']    = isset( $new_settings['madmimi-label'] ) ? esc_html( $new_settings['madmimi-label'] ) : $settings['madmimi-label'];
+        $settings['madmimi-username'] = trim( $new_settings['madmimi-username'] );
+        $settings['madmimi-api-key']  = trim( $new_settings['madmimi-api-key'] );
+        $settings['madmimi-list']     = esc_attr( $new_settings['madmimi-list'] );
+        $settings['madmimi-label']    = esc_html( $new_settings['madmimi-label'] );
         $settings['madmimi-checked']  = isset( $new_settings['madmimi-checked'] ) ? 1 : 0;
 
         // Save the settings and set saved flag to true.
@@ -388,12 +369,12 @@ class TGM_Exchange_Madmimi {
     }
 
     /**
-     * Helper function to retrieve all available Madmimi lists for the account.
+     * Helper function to retrieve all available MadMimi lists for the account.
      *
      * @since 1.0.0
      *
-     * @param string $username The Madmimi username.
-     * @param string $api_key The Madmimi API key.
+     * @param string $username The MadMimi username.
+     * @param string $api_key The MadMimi API key.
      * @return string An HTML string with lists or empty dropdown.
      */
     public function get_madmimi_lists( $username = '', $api_key = '' ) {
@@ -404,15 +385,15 @@ class TGM_Exchange_Madmimi {
         // If there is no username or API key, send back an empty placeholder list.
         if ( '' === trim( $username ) || '' === trim( $api_key ) ) {
             $html .= '<select id="tgm-exchange-madmimi-lists" name="_tgm_exchange_madmimi[madmimi-list]" disabled="disabled">';
-                $html .= '<option value="none">' . __( 'No lists to select from at this time.', 'tgm-exchange-madmimi' ) . '</option>';
+                $html .= '<option value="none">' . __( 'No lists to select from at this time.', 'LION' ) . '</option>';
             $html .= '</select>';
             $html .= '<img class="tgm-exchange-loading" src="' . includes_url( 'images/wpspin.gif' ) . '" alt="" />';
         } else {
-            // Load the Madmimi necessary library components.
+            // Load the MadMimi necessary library components.
             if ( ! class_exists( 'MadMimi' ) )
                 require_once plugin_dir_path( TGM_EXCHANGE_MADMIMI_FILE ) . 'lib/madmimi/MadMimi.class.php';
 
-            // Load the Madmimi API.
+            // Load the MadMimi API.
             $madmimi = new MadMimi( $username, $api_key );
 
             // Attempt to load the lists from the API.
@@ -422,7 +403,7 @@ class TGM_Exchange_Madmimi {
             // If XML is not returned, we need to send an error message.
             if ( ! $lists ) {
                 $html .= '<select id="tgm-exchange-madmimi-lists" class="tgm-exchange-error" name="_tgm_exchange_madmimi[madmimi-list]" disabled="disabled">';
-                    $html .= '<option value="none">' . __( 'Invalid credentials. Please try again.', 'tgm-exchange-madmimi' ) . '</option>';
+                    $html .= '<option value="none">' . __( 'Invalid credentials. Please try again.', 'LION' ) . '</option>';
                 $html .= '</select>';
                 $html .= '<img class="tgm-exchange-loading" src="' . includes_url( 'images/wpspin.gif' ) . '" alt="" />';
             } else {
@@ -449,7 +430,7 @@ class TGM_Exchange_Madmimi {
      */
     public function plugin_links( $links ) {
 
-        $links['setup_addon'] = '<a href="' . get_admin_url( null, 'admin.php?page=it-exchange-addons&add-on-settings=madmimi' ) . '" title="' . esc_attr__( 'Setup Add-on', 'tgm-exchange-madmimi' ) . '">' . __( 'Setup Add-on', 'tgm-exchange-madmimi' ) . '</a>';
+        $links['setup_addon'] = '<a href="' . get_admin_url( null, 'admin.php?page=it-exchange-addons&add-on-settings=madmimi' ) . '" title="' . esc_attr__( 'Setup Add-on', 'LION' ) . '">' . __( 'Setup Add-on', 'LION' ) . '</a>';
         return $links;
 
     }
@@ -469,15 +450,26 @@ class TGM_Exchange_Madmimi {
             return $res;
 
         // Build the HTML output of the optin.
-        $output  = '<div class="tgm-exchange-madmimi-signup">';
-            $output .= '<label for="tgm-exchange-madmimi-signup-field">';
-                $output .= '<input type="checkbox" id="tgm-exchange-madmimi-signup-field" name="tgm-exchange-madmimi-signup-field" value="' . $this->get_setting( 'madmimi-checked' ) . '"' . checked( $this->get_setting( 'madmimi-checked' ), 1, false ) . ' />' . $this->get_setting( 'madmimi-label' );
-            $output .= '</label>';
-        $output .= '</div>';
-        $output  = apply_filters( 'tgm_exchange_madmimi_output', $output );
+        $output = $this->get_optin_output();
 
         // Append the optin output to the password2 field.
         return $res . $output;
+
+    }
+
+    /**
+     * Outputs the optin checkbox on the appropriate guest checkout screens.
+     *
+     * @since 1.0.0
+     */
+    public function output_optin_guest() {
+
+        // Return early if the appropriate settings are not filled out.
+        if ( '' === trim( $this->get_setting( 'madmimi-username' ) ) || '' === trim( $this->get_setting( 'madmimi-api-key' ) ) || '' === trim( $this->get_setting( 'madmimi-list' ) ) )
+            return;
+
+        // Build and echo the HTML output of the optin.
+        echo $this->get_optin_output();
 
     }
 
@@ -496,11 +488,11 @@ class TGM_Exchange_Madmimi {
         if ( ! isset( $_POST['tgm-exchange-madmimi-signup-field'] ) || empty( $_POST['email'] ) || ! is_email( $_POST['email'] ) )
             return;
 
-        // Load the Madmimi API.
+        // Load the MadMimi API.
         if ( ! class_exists( 'MadMimi' ) )
             require_once plugin_dir_path( TGM_EXCHANGE_MADMIMI_FILE ) . 'lib/madmimi/MadMimi.class.php';
 
-        // Load the Madmimi API.
+        // Load the MadMimi API.
         $madmimi = new MadMimi( $this->get_setting( 'madmimi-username' ), $this->get_setting( 'madmimi-api-key' ) );
 
         // Prepare optin variables.
@@ -516,8 +508,58 @@ class TGM_Exchange_Madmimi {
 
     }
 
+    /**
+     * Processes the optin to the email service in a guest checkout.
+     *
+     * @since 1.0.0
+     *
+     * @param string $email The guest checkout email address.
+     */
+    public function do_optin_guest( $email ) {
+
+        // Return early if the appropriate settings are not filled out.
+        if ( '' === trim( $this->get_setting( 'madmimi-username' ) ) || '' === trim( $this->get_setting( 'madmimi-api-key' ) ) || '' === trim( $this->get_setting( 'madmimi-list' ) ) )
+            return;
+
+        // Load the MadMimi API.
+        if ( ! class_exists( 'MadMimi' ) )
+            require_once plugin_dir_path( TGM_EXCHANGE_MADMIMI_FILE ) . 'lib/madmimi/MadMimi.class.php';
+
+        // Load the MadMimi API.
+        $madmimi = new MadMimi( $this->get_setting( 'madmimi-username' ), $this->get_setting( 'madmimi-api-key' ) );
+
+        // Prepare optin variables.
+        $data = array( 'add_list' => $this->get_setting( 'madmimi-list' ), 'email' => $email );
+        $data = apply_filters( 'tgm_exchange_madmimi_optin_data', $data );
+
+        // Process the optin.
+        if ( $data )
+            $madmimi->AddUser( $data );
+
+    }
+
+    /**
+     * Generates and returns the optin output.
+     *
+     * @since 1.0.0
+     *
+     * @return string $output HTML string of optin output.
+     */
+    public function get_optin_output() {
+
+        $output  = '<div class="tgm-exchange-madmimi-signup" style="clear:both;">';
+            $output .= '<label for="tgm-exchange-madmimi-signup-field">';
+                $output .= '<input type="checkbox" id="tgm-exchange-madmimi-signup-field" name="tgm-exchange-madmimi-signup-field" value="' . $this->get_setting( 'madmimi-checked' ) . '"' . checked( $this->get_setting( 'madmimi-checked' ), 1, false ) . ' />' . $this->get_setting( 'madmimi-label' );
+            $output .= '</label>';
+        $output .= '</div>';
+        $output  = apply_filters( 'tgm_exchange_madmimi_output', $output );
+
+        return $output;
+
+    }
+
 }
 
 // Initialize the plugin.
 global $tgm_exchange_madmimi;
-$tgm_exchange_madmimi = TGM_Exchange_Madmimi::get_instance();
+$tgm_exchange_madmimi = TGM_Exchange_MadMimi::get_instance();
