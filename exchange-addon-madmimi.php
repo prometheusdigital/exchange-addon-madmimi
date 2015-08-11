@@ -12,7 +12,7 @@
  * Plugin Name:  iThemes Exchange - MadMimi Add-on
  * Plugin URI:   http://ithemes.com/exchange/madmimi/
  * Description:  Integrates Mad Mimi into the iThemes Exchange plugin.
- * Version:      1.0.9
+ * Version:      1.1.0
  * Author:       iThemes
  * Author URI:   http://ithemes.com/exchange
  * Text Domain:  LION
