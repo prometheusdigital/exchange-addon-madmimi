@@ -43,25 +43,19 @@ class MadMimi {
 	function default_options() {
 		return array('username' => $this->username, 'api_key' => $this->api_key);
 	}
-	function DoRequest($path, $options, $return_status = false, $method = 'GET', $mail = false) {
+	function DoRequest($path, $options, $return_status = false, $method = 'GET') {
 		if ($method == 'GET') {
 			$request_options = "?";
 		} else {
 			$request_options = "";
 		}
 		$request_options .= http_build_query($options);
-		if ($mail == false) {
-			$url = "http://api.madmimi.com{$path}";
-		} else {
-			$url = "https://api.madmimi.com{$path}";
-		}
+		$url = "https://api.madmimi.com{$path}";
 		if ($method == 'GET') {
 			$url .= $request_options;
 		}
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
-		// Fix for OpenSSL bug (http://stackoverflow.com/questions/8619706/running-curl-with-openssl-0-9-8-against-openssl-1-0-0-server-causes-handshake-er)
-		curl_setopt($ch, CURLOPT_SSLVERSION, 3);
 		// Fix libcurl vs. apache2
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Expect:"));
 		if ($return_status == true) {
@@ -75,10 +69,6 @@ class MadMimi {
 			case 'POST':
 				curl_setopt($ch, CURLOPT_POST, TRUE);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $request_options);
-				if (strstr($url, 'https')) {
-					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-					curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-				}
 				break;
 		}
 		if ($this->debug == true) {
@@ -139,7 +129,7 @@ class MadMimi {
 	}
 	function AddUser($user, $return = false) {
 		$csv = $this->build_csv($user);
-		$this->Import($csv, $return);
+		return $this->Import($csv, $return);
 	}
 	function RemoveUser($email, $list_name, $return = false) {
 		$options = array('email' => $email) + $this->default_options();
@@ -167,9 +157,9 @@ class MadMimi {
 		}
 		$options = $options + $this->default_options();
 		if (isset($options['list_name'])) {
-			$request = $this->DoRequest('/mailer/to_list', $options, $return, 'POST', true);
+			$request = $this->DoRequest('/mailer/to_list', $options, $return, 'POST');
 		} else {
-			$request = $this->DoRequest('/mailer', $options, $return, 'POST', true);
+			$request = $this->DoRequest('/mailer', $options, $return, 'POST');
 		}
 		return $request;
 	}
@@ -180,9 +170,9 @@ class MadMimi {
 		$options = $options + $this->default_options();
 		$options['raw_html'] = $html;
 		if (isset($options['list_name'])) {
-			$request = $this->DoRequest('/mailer/to_list', $options, $return, 'POST', true);
+			$request = $this->DoRequest('/mailer/to_list', $options, $return, 'POST');
 		} else {
-			$request = $this->DoRequest('/mailer', $options, $return, 'POST', true);
+			$request = $this->DoRequest('/mailer', $options, $return, 'POST');
 		}
 		return $request;
 	}
@@ -193,9 +183,9 @@ class MadMimi {
 		$options = $options + $this->default_options();
 		$options['raw_plain_text'] = $message;
 		if (isset($options['list_name'])) {
-			$request = $this->DoRequest('/mailer/to_list', $options, $return, 'POST', true);
+			$request = $this->DoRequest('/mailer/to_list', $options, $return, 'POST');
 		} else {
-			$request = $this->DoRequest('/mailer', $options, $return, 'POST', true);
+			$request = $this->DoRequest('/mailer', $options, $return, 'POST');
 		}
 		return $request;
 	}
@@ -229,12 +219,12 @@ class MadMimi {
 	}
 	function Suppress($email, $return = false) {
 		$path = str_replace('%email%', $email, '/audience_members/%email%/suppress_email');
-		$request = $this->DoRequest($path, $this->default_options(), $return, 'POST', false);
+		$request = $this->DoRequest($path, $this->default_options(), $return, 'POST');
 		return $request;
 	}
 	function IsSuppressed($email, $return = false) {
 		$path = str_replace('%email%', $email, '/audience_members/%email%/is_suppressed');
-		$request = $this->DoRequest($path, $this->default_options(), $return, 'POST', false);
+		$request = $this->DoRequest($path, $this->default_options(), $return, 'POST');
 		return $request;
 	}
 	function Unsuppress($email, $return = false) {
@@ -244,13 +234,13 @@ class MadMimi {
 	function AddMembership($list_name, $email, $additional = array(), $return = false) {
 		$options = array('email' => $email) + $additional + $this->default_options();
 		$path = '/audience_lists/' . rawurlencode($list_name) . '/add';
-		$request = $this->DoRequest($path, $options, $return, 'POST', false);
+		$request = $this->DoRequest($path, $options, $return, 'POST');
 		return $request;
 	}
 	function RemoveMembership($list_name, $email, $return = false) {
 		$options = array('email' => $email) + $this->default_options();
 		$path = '/audience_lists/' . rawurlencode($list_name) . '/remove';
-		$request = $this->DoRequest($path, $options, $return, 'POST', false);
+		$request = $this->DoRequest($path, $options, $return, 'POST');
 		return $request;
 	}
 }
