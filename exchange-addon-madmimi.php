@@ -1,6 +1,6 @@
 <?php
 /**
- * iThemes Exchange - Mad Mimi Add-on.
+ * ExchangeWP - Mad Mimi Add-on.
  *
  * @package   TGM_Exchange_MadMimi
  * @author    Thomas Griffin
@@ -9,18 +9,18 @@
  * @copyright 2013 Griffin Media, LLC. All rights reserved.
  *
  * @wordpress-plugin
- * Plugin Name:  iThemes Exchange - MadMimi Add-on
- * Plugin URI:   http://ithemes.com/exchange/madmimi/
- * Description:  Integrates Mad Mimi into the iThemes Exchange plugin.
+ * Plugin Name:  ExchangeWP - MadMimi Add-on
+ * Plugin URI:   https://exchangewp.com/downloads/madmimi
+ * Description:  Integrates Mad Mimi into the ExchangeWP plugin.
  * Version:      1.1.0
- * Author:       iThemes
- * Author URI:   http://ithemes.com/exchange
+ * Author:       ExchangeWP
+ * Author URI:   htts://exchangewp.com
  * Text Domain:  LION
- * Contributors: ithemes, griffinjt
+ * Contributors: exchangewp, griffinjt
  * License:      GPL-2.0+
  * License URI:  http://www.gnu.org/licenses/gpl-2.0.txt
  * Domain Path:  /lang
- * iThemes Package: exchange-addon-madmimi
+ * ExchangeWP Package: exchange-addon-madmimi
  *
  * This add-on was originally developed by Thomas Griffin <http://thomasgriffinmedia.com/>
  */
@@ -46,7 +46,7 @@ function tgm_exchange_madmimi_updater( $updater ) {
     if ( ! is_admin() ) return;
 
     // Load the updater class.
-    require_once dirname( __FILE__ ) . '/lib/updater/load.php';
+    // require_once dirname( __FILE__ ) . '/lib/updater/load.php';
 
     // Register the addon with the updater.
     $updater->register( 'exchange-addon-madmimi', __FILE__ );
@@ -69,8 +69,8 @@ function tgm_exchange_madmimi_register() {
         $options = array(
             'name'              => __( 'MadMimi', 'tgm-exchange-madmimi' ),
             'description'       => __( 'Adds a MadMimi optin checkbox to the user registration form.', 'tgm-exchange-madmimi' ),
-            'author'            => 'iThemes',
-            'author_url'        => 'http://ithemes.com/exchange/',
+            'author'            => 'ExchangeWP',
+            'author_url'        => 'https://exchangewp.com/downloads/madmimi',
             'icon'              => ITUtility::get_url_from_file( dirname( __FILE__ ) . '/lib/images/madmimi50px.png' ),
             'file'              => dirname( __FILE__ ) . '/class-exchange-addon-madmimi.php',
             'category'          => 'email',

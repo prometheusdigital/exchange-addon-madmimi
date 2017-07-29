@@ -1,6 +1,6 @@
 <?php
 /**
- * iThemes Exchange - Mad Mimi Add-on class.
+ * ExchangeWP - Mad Mimi Add-on class.
  *
  * @package   TGM_Exchange_MadMimi
  * @author    Thomas Griffin
@@ -31,7 +31,7 @@ class TGM_Exchange_MadMimi {
      *
      * @var string
      */
-    public $plugin_name = 'iThemes Exchange - Mad Mimi Add-on';
+    public $plugin_name = 'ExchangeWP - Mad Mimi Add-on';
 
     /**
      * Unique plugin identifier.
@@ -167,7 +167,7 @@ class TGM_Exchange_MadMimi {
         ?>
         <div id="tgm-exchange-madmimi-nag" class="it-exchange-nag">
             <?php
-            printf( __( 'To use the Mad Mimi add-on for iThemes Exchange, you must be using iThemes Exchange version 1.0.3 or higher. <a href="%s">Please update now</a>.', 'LION' ), admin_url( 'update-core.php' ) );
+            printf( __( 'To use the Mad Mimi add-on for ExchangeWP, you must be using ExchangeWP version 1.0.3 or higher. <a href="%s">Please update now</a>.', 'LION' ), admin_url( 'update-core.php' ) );
             ?>
         </div>
         <?php
