@@ -53,6 +53,10 @@ function tgm_exchange_madmimi_updater( $updater ) {
 
 }
 
+if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) )  {
+ 	require_once 'EDD_SL_Plugin_Updater.php';
+ }
+
 // Register the addon with the Exchange engine.
 add_action( 'it_exchange_register_addons', 'tgm_exchange_madmimi_register' );
 /**
