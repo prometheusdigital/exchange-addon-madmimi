@@ -237,8 +237,6 @@ class TGM_Exchange_MadMimi {
                     <?php wp_nonce_field( 'tgm-exchange-madmimi-form' ); ?>
                     <input type="hidden" name="tgm-exchange-madmimi-form" value="1" />
                     <?php
-                       $exchangewp_campaignmonitor_options = get_option( 'it-storage-exchange_addon_madmimi' );
-                       $license = $exchangewp_campaignmonitor_options['exchange_madmimi_license_key'];
                        $exstatus = trim( get_option( 'exchange_madmimi_license_status' ) );
                     ?>
                     <table class="form-table">
