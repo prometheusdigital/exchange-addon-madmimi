@@ -343,6 +343,7 @@ class TGM_Exchange_MadMimi {
 
         // Save the settings and set saved flag to true.
         update_option( 'tgm_exchange_madmimi', $settings );
+
         if( isset( $_POST['exchange_madmimi_license_activate'] ) ) {
 
 		    // run a quick security check

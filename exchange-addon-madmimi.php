@@ -14,7 +14,7 @@
  * Description:  Integrates Mad Mimi into the ExchangeWP plugin.
  * Version:      1.1.0
  * Author:       ExchangeWP
- * Author URI:   htts://exchangewp.com
+ * Author URI:   https://exchangewp.com
  * Text Domain:  LION
  * Contributors: exchangewp, griffinjt
  * License:      GPL-2.0+
