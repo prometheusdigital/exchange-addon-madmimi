@@ -57,6 +57,32 @@ if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) )  {
  	require_once 'EDD_SL_Plugin_Updater.php';
  }
 
+ function exchange_madmimi_plugin_updater() {
+
+ 	// retrieve our license key from the DB
+ 	// this is going to have to be pulled from a seralized array to get the actual key.
+ 	// $license_key = trim( get_option( 'exchange_madmimi_license_key' ) );
+ 	$exchangewp_madmimi_options = get_option( 'it-storage-exchange_addon_madmimi' );
+ 	$license_key = $exchangewp_madmimi_options['madmimi_license'];
+
+ 	// setup the updater
+ 	$edd_updater = new EDD_SL_Plugin_Updater( 'https://exchangewp.com', __FILE__, array(
+ 			'version' 		=> '1.1.1', 				// current version number
+ 			'license' 		=> $license_key, 		// license key (used get_option above to retrieve from DB)
+ 			'item_name' 	=> 'madmimi', 	  // name of this plugin
+ 			'author' 	  	=> 'ExchangeWP',    // author of this plugin
+ 			'url'       	=> home_url(),
+ 			'wp_override' => true,
+ 			'beta'		  	=> false
+ 		)
+ 	);
+ 	// var_dump($edd_updater);
+ 	// die();
+
+ }
+
+ add_action( 'admin_init', 'exchange_madmimi_plugin_updater', 0 );
+
 // Register the addon with the Exchange engine.
 add_action( 'it_exchange_register_addons', 'tgm_exchange_madmimi_register' );
 /**
