@@ -1,6 +1,6 @@
 <?php
 /**
- * iThemes Exchange - Mad Mimi Add-on.
+ * ExchangeWP - Mad Mimi Add-on.
  *
  * @package   TGM_Exchange_MadMimi
  * @author    Thomas Griffin
@@ -9,18 +9,18 @@
  * @copyright 2013 Griffin Media, LLC. All rights reserved.
  *
  * @wordpress-plugin
- * Plugin Name:  iThemes Exchange - MadMimi Add-on
- * Plugin URI:   http://ithemes.com/exchange/madmimi/
- * Description:  Integrates Mad Mimi into the iThemes Exchange plugin.
- * Version:      1.1.0
- * Author:       iThemes
- * Author URI:   http://ithemes.com/exchange
+ * Plugin Name:  ExchangeWP - MadMimi Add-on
+ * Plugin URI:   https://exchangewp.com/downloads/madmimi
+ * Description:  Integrates Mad Mimi into the ExchangeWP plugin.
+ * Version:      1.1.1
+ * Author:       ExchangeWP
+ * Author URI:   https://exchangewp.com
  * Text Domain:  LION
- * Contributors: ithemes, griffinjt
+ * Contributors: exchangewp, griffinjt
  * License:      GPL-2.0+
  * License URI:  http://www.gnu.org/licenses/gpl-2.0.txt
  * Domain Path:  /lang
- * iThemes Package: exchange-addon-madmimi
+ * ExchangeWP Package: exchange-addon-madmimi
  *
  * This add-on was originally developed by Thomas Griffin <http://thomasgriffinmedia.com/>
  */
@@ -46,12 +46,42 @@ function tgm_exchange_madmimi_updater( $updater ) {
     if ( ! is_admin() ) return;
 
     // Load the updater class.
-    require_once dirname( __FILE__ ) . '/lib/updater/load.php';
+    // require_once dirname( __FILE__ ) . '/lib/updater/load.php';
 
     // Register the addon with the updater.
     $updater->register( 'exchange-addon-madmimi', __FILE__ );
 
 }
+
+if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) )  {
+ 	require_once 'EDD_SL_Plugin_Updater.php';
+ }
+
+ function exchange_madmimi_plugin_updater() {
+
+ 	// retrieve our license key from the DB
+ 	// this is going to have to be pulled from a seralized array to get the actual key.
+ 	// $license_key = trim( get_option( 'exchange_madmimi_license_key' ) );
+ 	$exchangewp_madmimi_options = get_option( 'it-storage-exchange_addon_madmimi' );
+ 	$license_key = $exchangewp_madmimi_options['madmimi_license'];
+
+ 	// setup the updater
+ 	$edd_updater = new EDD_SL_Plugin_Updater( 'https://exchangewp.com', __FILE__, array(
+ 			'version' 		=> '1.1.1', 				// current version number
+ 			'license' 		=> $license_key, 		// license key (used get_option above to retrieve from DB)
+ 			'item_name' 	=> 'madmimi', 	  // name of this plugin
+ 			'author' 	  	=> 'ExchangeWP',    // author of this plugin
+ 			'url'       	=> home_url(),
+ 			'wp_override' => true,
+ 			'beta'		  	=> false
+ 		)
+ 	);
+ 	// var_dump($edd_updater);
+ 	// die();
+
+ }
+
+ add_action( 'admin_init', 'exchange_madmimi_plugin_updater', 0 );
 
 // Register the addon with the Exchange engine.
 add_action( 'it_exchange_register_addons', 'tgm_exchange_madmimi_register' );
@@ -69,8 +99,8 @@ function tgm_exchange_madmimi_register() {
         $options = array(
             'name'              => __( 'MadMimi', 'tgm-exchange-madmimi' ),
             'description'       => __( 'Adds a MadMimi optin checkbox to the user registration form.', 'tgm-exchange-madmimi' ),
-            'author'            => 'iThemes',
-            'author_url'        => 'http://ithemes.com/exchange/',
+            'author'            => 'ExchangeWP',
+            'author_url'        => 'https://exchangewp.com/downloads/madmimi',
             'icon'              => ITUtility::get_url_from_file( dirname( __FILE__ ) . '/lib/images/madmimi50px.png' ),
             'file'              => dirname( __FILE__ ) . '/class-exchange-addon-madmimi.php',
             'category'          => 'email',
