@@ -12,7 +12,7 @@
  * Plugin Name:  ExchangeWP - MadMimi Add-on
  * Plugin URI:   https://exchangewp.com/downloads/madmimi
  * Description:  Integrates Mad Mimi into the ExchangeWP plugin.
- * Version:      1.1.0
+ * Version:      1.1.1
  * Author:       ExchangeWP
  * Author URI:   https://exchangewp.com
  * Text Domain:  LION
