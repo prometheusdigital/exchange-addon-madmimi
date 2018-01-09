@@ -12,7 +12,7 @@
  * Plugin Name:  ExchangeWP - MadMimi Add-on
  * Plugin URI:   https://exchangewp.com/downloads/madmimi
  * Description:  Integrates Mad Mimi into the ExchangeWP plugin.
- * Version:      1.1.1
+ * Version:      1.1.2
  * Author:       ExchangeWP
  * Author URI:   https://exchangewp.com
  * Text Domain:  LION
@@ -31,57 +31,29 @@ if ( ! defined( 'WPINC' ) ) die;
 // Define constants.
 define( 'TGM_EXCHANGE_MADMIMI_FILE', __FILE__ );
 
-// Register the plugin updater.
-add_action( 'ithemes_updater_register', 'tgm_exchange_madmimi_updater' );
-/**
- * Registers the iThemes updater with the addon.
- *
- * @since 1.0.0
- *
- * @param object $updater The iThemes updater object.
- */
-function tgm_exchange_madmimi_updater( $updater ) {
+function exchange_madmimi_plugin_updater() {
 
-    // Return early if not in the admin.
-    if ( ! is_admin() ) return;
+	$license_check = get_transient( 'exchangewp_license_check' );
 
-    // Load the updater class.
-    // require_once dirname( __FILE__ ) . '/lib/updater/load.php';
+	if ($license_check->license == 'valid' ) {
+		$license_key = it_exchange_get_option( 'exchangewp_licenses' );
+		$license = $license_key['exchange_license'];
 
-    // Register the addon with the updater.
-    $updater->register( 'exchange-addon-madmimi', __FILE__ );
+		$edd_updater = new EDD_SL_Plugin_Updater( 'https://exchangewp.com', __FILE__, array(
+				'version' 		=> '1.1.2', 				// current version number
+				'license' 		=> $license, 				// license key (used get_option above to retrieve from DB)
+				'item_id'		 	=> 387,					 	  // name of this plugin
+				'author' 	  	=> 'ExchangeWP',    // author of this plugin
+				'url'       	=> home_url(),
+				'wp_override' => true,
+				'beta'		  	=> false
+			)
+		);
+	}
 
 }
 
-if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) )  {
- 	require_once 'EDD_SL_Plugin_Updater.php';
- }
-
- function exchange_madmimi_plugin_updater() {
-
- 	// retrieve our license key from the DB
- 	// this is going to have to be pulled from a seralized array to get the actual key.
- 	// $license_key = trim( get_option( 'exchange_madmimi_license_key' ) );
- 	$exchangewp_madmimi_options = get_option( 'it-storage-exchange_addon_madmimi' );
- 	$license_key = $exchangewp_madmimi_options['madmimi_license'];
-
- 	// setup the updater
- 	$edd_updater = new EDD_SL_Plugin_Updater( 'https://exchangewp.com', __FILE__, array(
- 			'version' 		=> '1.1.1', 				// current version number
- 			'license' 		=> $license_key, 		// license key (used get_option above to retrieve from DB)
- 			'item_name' 	=> 'madmimi', 	  // name of this plugin
- 			'author' 	  	=> 'ExchangeWP',    // author of this plugin
- 			'url'       	=> home_url(),
- 			'wp_override' => true,
- 			'beta'		  	=> false
- 		)
- 	);
- 	// var_dump($edd_updater);
- 	// die();
-
- }
-
- add_action( 'admin_init', 'exchange_madmimi_plugin_updater', 0 );
+add_action( 'admin_init', 'exchange_madmimi_plugin_updater', 0 );
 
 // Register the addon with the Exchange engine.
 add_action( 'it_exchange_register_addons', 'tgm_exchange_madmimi_register' );
